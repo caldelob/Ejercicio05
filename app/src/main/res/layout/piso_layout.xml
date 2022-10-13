@@ -14,20 +14,19 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/lblCallePiso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="3"
-            android:text="TextView" />
+            android:hint="@string/direccion" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/lblNumeroPiso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -39,20 +38,23 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/lblProvinciaPiso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            android:hint="@string/provincia"
             android:text="TextView" />
 
         <RatingBar
-            android:id="@+id/ratingBar2"
+            android:id="@+id/rbValoracionPiso"
             style="@style/Widget.AppCompat.RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="0"
-            android:numStars="5" />
+            android:numStars="5"
+            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
+
 </LinearLayout>

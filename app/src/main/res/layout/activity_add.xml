@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity_add">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/txtAddDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/direccion"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAddNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Número"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/txtAddCiudad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ciudad"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAddProvincia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/provincia"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAddCP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/cp"
+        android:inputType="textPersonName" />
+
+    <RatingBar
+        android:id="@+id/rbAddranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:numStars="5" />
+
+    <Button
+        android:id="@+id/btnAddAceptar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/aceptar" />
+
+    <Button
+        android:id="@+id/btnAddCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cancelar" />
+
+</LinearLayout>
