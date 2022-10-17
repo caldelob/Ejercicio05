@@ -1,8 +1,7 @@
 <resources>
-    //esto lo escribimos nosotros, borrando lo que habia antes
     <string name="app_name">Ejercicio05</string>
     <string name="direccion">Dirección</string>
-    <Integer name="numero">0</Integer>
+    <string name="numero">Numero</string>
     <string name="ciudad">Ciudad</string>
     <string name="provincia">Provincia</string>
     <string name="cp">Código Postal</string>

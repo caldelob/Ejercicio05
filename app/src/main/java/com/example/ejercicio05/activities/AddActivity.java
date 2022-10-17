@@ -3,26 +3,29 @@ package com.example.ejercicio05.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ejercicio05.R;
+import com.example.ejercicio05.configuraciones.Constantes;
+import com.example.ejercicio05.databinding.ActivityAddBinding;
+import com.example.ejercicio05.modelos.Piso;
 
 public class AddActivity extends AppCompatActivity {
 
-    //1. Activa ek binding para la Activity:
-    private AddActivity binding;
+
+    private ActivityAddBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //Contruye el binding:
-        binding = AddActivity.inflate(getLayoutInflater()); // el inflate lee el xml y construye las variables
-
-        //Asocia el binding a la Activity:
+        binding = ActivityAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setContentView(R.layout.activity_add);
 
 
         binding.btnAddCancelar.setOnClickListener(new View.OnClickListener() {
@@ -33,40 +36,45 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnCrearAddAlumno.setOnClickListener(new View.OnClickListener() {
+        binding.btnAddAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Alumno alumno = createAlumno();
-                if(alumno!= null){
+                Piso inmueble = crearInmueble();
+                if(inmueble != null){
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("ALUMNO", alumno);
+                    bundle.putSerializable(Constantes.INMUEBLE, inmueble);
                     Intent intent = new Intent();
                     intent.putExtras(bundle);
                     setResult(RESULT_OK, intent);
                     finish();
+
                 }else{
-                    Toast.makeText(AddAlumnoActivity.this, "FALTAN DATOS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddActivity.this, "FALTAN DATOS", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
-    private Alumno createAlumno() {
-        if(binding.txtNombreAddAlumno.getText().toString().isEmpty() || binding.txtApellidosAddAlumno.getText().toString().isEmpty())
-            return null;
+    private Piso crearInmueble() {
+        if(binding.txtAddDireccion.getText().toString().isEmpty() ||
+        binding.txtAddNumero.getText().toString().isEmpty() ||
+                binding.txtAddCP.getText().toString().isEmpty() ||
+                binding.txtAddProvincia.getText().toString().isEmpty() ||
+                binding.txtAddCiudad.getText().toString().isEmpty()
 
-        if (binding.spCiclosAddAlumno.getSelectedItemPosition()== 0)
-            return null;
-        if(!binding.rbGrupoAAddAlumno.isChecked() && !binding.rbGrupoBAddAlumno.isChecked() && !binding.rbGrupoCAddAlumno.isChecked())
-            return null;
 
-        String ciclo = (String) binding.spCiclosAddAlumno.getSelectedItem();
-        RadioButton rb = findViewById(binding.rgGruposAdd.getCheckedRadioButtonId());
-        char grupo = rb.getText().charAt(0);
 
-        return new Alumno(binding.txtNombreAddAlumno.getText().toString(), binding.txtApellidosAddAlumno.getText().toString(), ciclo, grupo);
+        )
+            return null;
+        return new Piso(
+                binding.txtAddDireccion.getText().toString(),
+                Integer.parseInt(binding.txtAddNumero.getText().toString()),
+                binding.txtAddCiudad.getText().toString(),
+                binding.txtAddProvincia.getText().toString(),
+                binding.txtAddCP.getText().toString(),
+                binding.rbAddranking.getRating()
+        );
+
     }
 
 }

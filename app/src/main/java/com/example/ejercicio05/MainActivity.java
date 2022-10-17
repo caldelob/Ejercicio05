@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.ejercicio05.activities.AddActivity;
+import com.example.ejercicio05.configuraciones.Constantes;
 import com.example.ejercicio05.modelos.Piso;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -16,18 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.example.ejercicio05.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.nio.channels.Pipe;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         listaPisos = new ArrayList<>();
+        setSupportActionBar(binding.toolbar);
         inicializaLaunchers();
 
 
-        setSupportActionBar(binding.toolbar);
+
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,35 +63,59 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode()==RESULT_OK){
-                            if(result.getData()!= null && result.getData().getExtras()!=null){
-                                Piso piso = (Piso) result.getData().getExtras().getSerializable("PISO");
-                                listaPisos.add(piso);
-                                pintarElementos();
+                        if (result.getResultCode() == RESULT_OK) {
+                            if (result.getData() != null) {
+                                if (result.getData().getExtras() != null) {
+                                    if (result.getData().getExtras().getSerializable(Constantes.INMUEBLE) != null) {
+
+                                        Piso inmuble = (Piso) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
+                                        listaPisos.add(inmuble);
+                                        pintarElementos();
+
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "NO HAY DATOS", Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    Toast.makeText(MainActivity.this, "NO HAY BUNDLE EN EL INTENT", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+
+                                Toast.makeText(MainActivity.this, "NO HAY INTENT", Toast.LENGTH_LONG).show();
                             }
+                        } else {
+                            Toast.makeText(MainActivity.this, "VENTANA CANCELADA", Toast.LENGTH_LONG).show();
                         }
                     }
-                }
-        );
 
-
+                });
     }
+
 
     private void pintarElementos() {
         binding.content.contenedor.removeAllViews();
 
-        for (Piso piso:listaPisos) {
-            View pisosView = LayoutInflater.from(MainActivity.this).inflate(R.layout.piso_layout, null); //aqui meto el xml que hay en alumno_model_view
-            TextView lblCalle = pisosView.findViewById(R.id.lblCallePiso);
-            TextView lbl = alumnoView.findViewById(R.id.lblApellidoView);
-            TextView lblCiclo = alumnoView.findViewById(R.id.lblCicloView);
-            TextView lblgrupo = alumnoView.findViewById(R.id.lblGrupoView);
+        for (int i = 0; i < listaPisos.size(); i++) {
+            Piso piso = listaPisos.get(i);
 
-            lblNombre.setText(alumno.getNombre());
-            lblApellidos.setText(alumno.getApellidos());
-            lblCiclo.setText(alumno.getCiclo());
-            lblgrupo.setText(String.valueOf(alumno.getGrupo()));
+            View pisosView = LayoutInflater.from(MainActivity.this).inflate(R.layout.inmueble_view_model, null);
 
-            binding.content.contenedor.addView(alumnoView);
+            TextView lblCalle = pisosView.findViewById(R.id.lblDireccionInmuebleModel);
+            TextView lblNumeroPiso = pisosView.findViewById(R.id.lblNumeroInmuebleModel);
+            TextView lblCiudad = pisosView.findViewById(R.id.lblCiudadInmuebleModel);
+            TextView lblProvincia = pisosView.findViewById(R.id.lblInmuebleProvinciaModel);
+            RatingBar rbValoracion = pisosView.findViewById(R.id.rbRatingInmuebleModel);
+
+            lblCalle.setText(piso.getDireccion());
+            lblNumeroPiso.setText(String.valueOf(piso.getNumero()));
+            lblCiudad.setText(piso.getCiudad());
+            lblProvincia.setText(piso.getProvincia());
+            rbValoracion.setRating(piso.getValoracion());
+
+            binding.content.contenedor.addView(pisosView);
+        }
+
+
+
+
     }
 }

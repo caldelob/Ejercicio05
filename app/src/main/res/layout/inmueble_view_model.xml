@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/lblCallePiso"
+            android:id="@+id/lblDireccionInmuebleModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -22,7 +23,7 @@
             android:hint="@string/direccion" />
 
         <TextView
-            android:id="@+id/lblNumeroPiso"
+            android:id="@+id/lblNumeroInmuebleModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -33,28 +34,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/lblProvinciaPiso"
+            android:id="@+id/lblCiudadInmuebleModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:hint="@string/ciudad" />
+
+        <TextView
+            android:id="@+id/lblInmuebleProvinciaModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:hint="@string/provincia"
-            android:text="TextView" />
+            android:textAlignment="gravity" />
 
-        <RatingBar
-            android:id="@+id/rbValoracionPiso"
-            style="@style/Widget.AppCompat.RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="0"
-            android:numStars="5"
-            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/rbRatingInmuebleModel"
+        style="@style/Widget.AppCompat.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:isIndicator="true"
+        android:numStars="5"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </LinearLayout>
