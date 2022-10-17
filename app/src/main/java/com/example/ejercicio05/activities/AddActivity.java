@@ -25,7 +25,7 @@ public class AddActivity extends AppCompatActivity {
 
         binding = ActivityAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setContentView(R.layout.activity_add);
+
 
 
         binding.btnAddCancelar.setOnClickListener(new View.OnClickListener() {
