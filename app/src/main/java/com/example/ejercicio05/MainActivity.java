@@ -99,13 +99,18 @@ public class MainActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode()== RESULT_OK){
                             if(result.getData()!=null){
-                                if(result.getData().getExtras()!=null){
+                                if(result.getData().getExtras()!=null && result.getData().getExtras().getSerializable(Constantes.INMUEBLE)!=null){
                                     Piso piso = (Piso) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
                                     int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
                                     listaPisos.set(posicion, piso);
                                     pintarElementos();
                                 }
                             }else{
+                                if(result.getData().getExtras()!=null){
+                                    int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
+                                    listaPisos.remove(posicion);
+                                    pintarElementos();
+                                }
 
                             }
                         }
