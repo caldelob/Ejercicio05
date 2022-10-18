@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.ejercicio05.activities.AddActivity;
+import com.example.ejercicio05.activities.EditActivity;
 import com.example.ejercicio05.configuraciones.Constantes;
 import com.example.ejercicio05.modelos.Piso;
 
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Piso> listaPisos;
 
     private ActivityResultLauncher<Intent> launcherCrearPisos;
+    private ActivityResultLauncher<Intent> editInmuebleLauncher;
+
+
 
 
 
@@ -86,10 +90,29 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "VENTANA CANCELADA", Toast.LENGTH_LONG).show();
                         }
                     }
-
                 });
-    }
 
+        editInmuebleLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode()== RESULT_OK){
+                            if(result.getData()!=null){
+                                if(result.getData().getExtras()!=null){
+                                    Piso piso = (Piso) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
+                                    int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
+                                    listaPisos.set(posicion, piso);
+                                    pintarElementos();
+                                }
+                            }else{
+
+                            }
+                        }
+                    }
+                }
+        );
+    }
 
     private void pintarElementos() {
         binding.content.contenedor.removeAllViews();
@@ -99,11 +122,28 @@ public class MainActivity extends AppCompatActivity {
 
             View pisosView = LayoutInflater.from(MainActivity.this).inflate(R.layout.inmueble_view_model, null);
 
+
             TextView lblCalle = pisosView.findViewById(R.id.lblDireccionInmuebleModel);
             TextView lblNumeroPiso = pisosView.findViewById(R.id.lblNumeroInmuebleModel);
             TextView lblCiudad = pisosView.findViewById(R.id.lblCiudadInmuebleModel);
             TextView lblProvincia = pisosView.findViewById(R.id.lblInmuebleProvinciaModel);
             RatingBar rbValoracion = pisosView.findViewById(R.id.rbRatingInmuebleModel);
+
+            int finalI = i;
+            pisosView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constantes.INMUEBLE, piso);
+                    bundle.putInt(Constantes.POSICION, finalI);
+                    intent.putExtras(bundle);
+                    editInmuebleLauncher.launch(intent);
+                }
+            });
+
+
+
 
             lblCalle.setText(piso.getDireccion());
             lblNumeroPiso.setText(String.valueOf(piso.getNumero()));
@@ -112,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             rbValoracion.setRating(piso.getValoracion());
 
             binding.content.contenedor.addView(pisosView);
+
         }
 
 
